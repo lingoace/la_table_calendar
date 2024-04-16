@@ -640,49 +640,50 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         children.add(content);
 
-        if (!isDisabled) {
-          final events = widget.eventLoader?.call(day) ?? [];
-          Widget? markerWidget =
-              widget.calendarBuilders.markerBuilder?.call(context, day, events);
+        //需求需要在disabled的状态下仍然显示当前有课 所以需要去掉该限制
+        // if (!isDisabled) {
+        final events = widget.eventLoader?.call(day) ?? [];
+        Widget? markerWidget =
+            widget.calendarBuilders.markerBuilder?.call(context, day, events);
 
-          if (events.isNotEmpty && markerWidget == null) {
-            final center = constraints.maxHeight / 2;
+        if (events.isNotEmpty && markerWidget == null) {
+          final center = constraints.maxHeight / 2;
 
-            final markerSize = widget.calendarStyle.markerSize ??
-                (shorterSide - widget.calendarStyle.cellMargin.vertical) *
-                    widget.calendarStyle.markerSizeScale;
+          final markerSize = widget.calendarStyle.markerSize ??
+              (shorterSide - widget.calendarStyle.cellMargin.vertical) *
+                  widget.calendarStyle.markerSizeScale;
 
-            final markerAutoAlignmentTop = center +
-                (shorterSide - widget.calendarStyle.cellMargin.vertical) / 2 -
-                (markerSize * widget.calendarStyle.markersAnchor);
+          final markerAutoAlignmentTop = center +
+              (shorterSide - widget.calendarStyle.cellMargin.vertical) / 2 -
+              (markerSize * widget.calendarStyle.markersAnchor);
 
-            markerWidget = PositionedDirectional(
-              top: widget.calendarStyle.markersAutoAligned
-                  ? markerAutoAlignmentTop
-                  : widget.calendarStyle.markersOffset.top,
-              bottom: widget.calendarStyle.markersAutoAligned
-                  ? null
-                  : widget.calendarStyle.markersOffset.bottom,
-              start: widget.calendarStyle.markersAutoAligned
-                  ? null
-                  : widget.calendarStyle.markersOffset.start,
-              end: widget.calendarStyle.markersAutoAligned
-                  ? null
-                  : widget.calendarStyle.markersOffset.end,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: events
-                    .take(widget.calendarStyle.markersMaxCount)
-                    .map((event) => _buildSingleMarker(day, event, markerSize))
-                    .toList(),
-              ),
-            );
-          }
-
-          if (markerWidget != null) {
-            children.add(markerWidget);
-          }
+          markerWidget = PositionedDirectional(
+            top: widget.calendarStyle.markersAutoAligned
+                ? markerAutoAlignmentTop
+                : widget.calendarStyle.markersOffset.top,
+            bottom: widget.calendarStyle.markersAutoAligned
+                ? null
+                : widget.calendarStyle.markersOffset.bottom,
+            start: widget.calendarStyle.markersAutoAligned
+                ? null
+                : widget.calendarStyle.markersOffset.start,
+            end: widget.calendarStyle.markersAutoAligned
+                ? null
+                : widget.calendarStyle.markersOffset.end,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: events
+                  .take(widget.calendarStyle.markersMaxCount)
+                  .map((event) => _buildSingleMarker(day, event, markerSize))
+                  .toList(),
+            ),
+          );
         }
+
+        if (markerWidget != null) {
+          children.add(markerWidget);
+        }
+        // }
 
         return Stack(
           alignment: widget.calendarStyle.markersAlignment,
