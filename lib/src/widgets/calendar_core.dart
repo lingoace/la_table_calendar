@@ -32,6 +32,8 @@ class CalendarCore extends StatelessWidget {
   final PageController? pageController;
   final ScrollPhysics? scrollPhysics;
   final _OnCalendarPageChanged onPageChanged;
+  final bool showDivider;
+  final Color? dividerColor;
 
   const CalendarCore({
     Key? key,
@@ -57,6 +59,8 @@ class CalendarCore extends StatelessWidget {
     this.tableBorder,
     this.tablePadding,
     this.scrollPhysics,
+    this.showDivider = false,
+    this.dividerColor,
   })  : assert(!dowVisible || (dowHeight != null && dowBuilder != null)),
         super(key: key);
 
@@ -84,6 +88,8 @@ class CalendarCore extends StatelessWidget {
           rowDecoration: rowDecoration,
           tableBorder: tableBorder,
           tablePadding: tablePadding,
+          showDivider: showDivider,
+          dividerColor: dividerColor,
           dowBuilder: (context, day) {
             return SizedBox(
               height: dowHeight,

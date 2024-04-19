@@ -1,6 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CalendarPage extends StatelessWidget {
@@ -15,6 +16,8 @@ class CalendarPage extends StatelessWidget {
   final bool dowVisible;
   final bool weekNumberVisible;
   final double? dowHeight;
+  final bool showDivider;
+  final Color? dividerColor;
 
   const CalendarPage({
     Key? key,
@@ -27,6 +30,8 @@ class CalendarPage extends StatelessWidget {
     this.tableBorder,
     this.tablePadding,
     this.dowVisible = true,
+    this.showDivider = false,
+    this.dividerColor,
     this.weekNumberVisible = false,
     this.dowHeight,
   })  : assert(!dowVisible || (dowHeight != null && dowBuilder != null)),
@@ -46,6 +51,7 @@ class CalendarPage extends StatelessWidget {
               border: tableBorder,
               children: [
                 if (dowVisible) _buildDaysOfWeek(context),
+                if (showDivider) _dividerOfWeek(context),
                 ..._buildCalendarDays(context),
               ],
             ),
@@ -77,6 +83,15 @@ class CalendarPage extends StatelessWidget {
         7,
         (index) => dowBuilder!(context, visibleDays[index]),
       ).toList(),
+    );
+  }
+
+  TableRow _dividerOfWeek(BuildContext context) {
+    return TableRow(
+      decoration: dowDecoration,
+      children:
+          List.generate(7, (index) => Container(height: 1, color: dividerColor))
+              .toList(),
     );
   }
 

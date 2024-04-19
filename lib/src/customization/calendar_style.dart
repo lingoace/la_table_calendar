@@ -151,6 +151,10 @@ class CalendarStyle {
   /// Padding for the internal `Table` widget.
   final EdgeInsets tablePadding;
 
+  final bool showDivider;
+
+  final Color? dividerColor;
+
   /// Creates a `CalendarStyle` used by `TableCalendar` widget.
   const CalendarStyle({
     this.isTodayHighlighted = true,
@@ -227,6 +231,8 @@ class CalendarStyle {
     this.rowDecoration = const BoxDecoration(),
     this.tableBorder = const TableBorder(),
     this.tablePadding = const EdgeInsets.all(0),
+    this.showDivider = false,
+    this.dividerColor,
   });
 }
 

@@ -493,6 +493,8 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
             rowDecoration: widget.calendarStyle.rowDecoration,
             tableBorder: widget.calendarStyle.tableBorder,
             tablePadding: widget.calendarStyle.tablePadding,
+            showDivider: widget.calendarStyle.showDivider,
+            dividerColor: widget.calendarStyle.dividerColor,
             dowVisible: widget.daysOfWeekVisible,
             dowHeight: widget.daysOfWeekHeight,
             rowHeight: widget.rowHeight,
