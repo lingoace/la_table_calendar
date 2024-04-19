@@ -534,17 +534,20 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                   widget.calendarBuilders.dowBuilder?.call(context, day);
 
               if (dowCell == null) {
-                final weekdayString = widget.daysOfWeekStyle.dowTextFormatter
+                final String weekdayString = widget
+                        .daysOfWeekStyle.dowTextFormatter
                         ?.call(day, widget.locale) ??
                     DateFormat.E(widget.locale).format(day);
-
+                String text = weekdayString.replaceAll("周", "");
+                text = text[0].toUpperCase() + text.substring(1);
+                text = text.replaceAll('.', '');
                 final isWeekend =
                     _isWeekend(day, weekendDays: widget.weekendDays);
 
                 dowCell = Center(
                   child: ExcludeSemantics(
                     child: Text(
-                      weekdayString,
+                      text,
                       style: isWeekend
                           ? widget.daysOfWeekStyle.weekendStyle
                           : widget.daysOfWeekStyle.weekdayStyle,
